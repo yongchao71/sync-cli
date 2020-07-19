@@ -21,8 +21,11 @@
     "download-git-repo": "^3.0.2",
     "inquirer": "^7.3.1",
     "ora": "^4.0.4",
+    "request": "^2.88.2",
+    "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "update-notifier": "^4.1.0",
+    "user-home": "^2.0.0",
     "util": "^0.12.3"
   }
 }

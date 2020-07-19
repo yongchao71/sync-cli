@@ -1,4 +1,6 @@
 {
     "project": "sync-cli",
-    "separator": "-->"
+    "separator": "-->",
+    "source": "D:\\temp\\sync-test\\source",
+    "destination": "D:\\temp\\sync-test\\destination"
 }
