@@ -19,6 +19,7 @@ program
 
 program.command('zks <command>', 'this is zks test')
     .command('watch', 'this is global watcher')
+    .command('test', 'this is test cli')
     .command('init').alias('i')
     .description('generate a new project from a template')
     .action(function (projectName) {

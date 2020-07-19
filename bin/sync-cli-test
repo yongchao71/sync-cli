@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+const program = require('commander');
+const path = require('path');
+const { generator } = require('../lib/generator');
+
+const src = path.join(process.cwd(), 'template/source/demo')
+const destination = path.join(process.cwd(), 'template/destination')
+generator({
+    projectName: 'project_22212',
+    projectVersion: '1.11.2',
+    projectDescription: 'this is description'
+}, src, destination).then(result => {
+    console.log(result);
+});
+
+

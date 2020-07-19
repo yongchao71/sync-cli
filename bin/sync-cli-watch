@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 const chokidar = require('chokidar');
 const path = require('path');
 const download = require('download-git-repo');
+const latestVersion = require('latest-version');
 const ora = require('ora');
 const { log, success } = require('../lib/logger');
 const config = require('../config/config.json');
@@ -28,7 +29,9 @@ program.on('--help', function () {
 
 function help() {
     program.parse(process.argv);
-    console.log('process.argv---->>', process.argv);
+    latestVersion('sync-cli').then(version => {
+        log(version);
+    });
     console.log('program--zzzz--->>>', program.zzzz, program.kkkk, program.ssss)
     if (program.args && program.args.length < 1) return program.help();
     const watcher = startWatch();
