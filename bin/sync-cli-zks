@@ -4,7 +4,8 @@ const inquirer = require('inquirer');
 const path = require('path');
 const download = require('download-git-repo');
 const ora = require('ora');
-const { log, success } = require('../lib/logger');
+const { log, success, error } = require('../lib/logger');
+
 
 
 program.usage('<command> [zks-name]')
