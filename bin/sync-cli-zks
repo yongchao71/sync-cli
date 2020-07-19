@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+const program = require('commander');
+const inquirer = require('inquirer');
+const path = require('path');
+const download = require('download-git-repo');
+const ora = require('ora');
+const { log, success } = require('../lib/logger');
+
+
+program.usage('<command> [zks-name]')
+    .option('-z, --zzzz [type]', 'this is z')
+    .option('-k, --kkkk [ff]', 'this is k')
+    .option('-s, --ssss [type]', 'this is s').action((result, dfdfdf, dir, fgfgg) => {
+        // console.log('1111------>>',result)
+        // console.log('2222------>>', dfdfdf)
+        // console.log('3333------>>', dir)
+        // console.log('4444------>>',fgfgg)
+    });
+
+
+program.on('--help', function () {
+    console.log(' zks Examples:')
+    console.log()
+    console.log('    # this is zks filter')
+    console.log('    $ my-cli zks my-project')
+    console.log()
+})
+
+function help() {
+    program.parse(process.argv);
+
+    success('##############################');
+    console.log('program----->>>', process.cwd(), path.relative('../', process.cwd()), process.cwd())
+    console.log('program----->>>', path.resolve('.'))
+    console.log('program----->>>', path.resolve('..\\dfd/fdf'))
+    console.log('program--111--->>>', program.args)
+    console.log('program--zzzz--->>>', program.zzzz, program.kkkk, program.ssss)
+    if (program.args && program.args.length < 1) return program.help();
+}
+help();

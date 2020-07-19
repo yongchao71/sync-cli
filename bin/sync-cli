@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+const program = require('commander');
+const inquirer = require('inquirer');
+const download = require('download-git-repo');
+const ora = require('ora');
+
+process.on('uncaughtException', function (err) {
+    console.log('Caught exception: ' + err);
+});
+
+program
+    .version(require('../package.json').version)
+    .usage('<command> [project-name]');
+
+program.command('zks <command>', 'this is zks test')
+    .command('init').alias('i')
+    .description('generate a new project from a template')
+    .action(function (projectName) {
+        var spinner = ora('downloading template');
+        spinner.start();
+
+        console.log('projectName=======>>>');
+        // console.log('projectName=======>>>', projectName);
+        setTimeout(() => {
+            spinner.stop();
+        }, 5000);
+        // download('berwin/koa-vue-template', projectName, function (err, done) {
+        //   spinner.stop();
+        //   if (err) {
+        //     console.error(err);
+        //     return;
+        //   }
+        //   console.log('Generated %s', projectName);
+        // });
+    });
+
+program.on('--help', function () {
+    console.log('  Examples:')
+    console.log()
+    console.log('    # create a new project with an official template')
+    console.log('    $ my-cli init my-project')
+    console.log()
+})
+program.command('hhhh').option('aaa', 'this is aaa').option('bbb', 'this is bbb')
+    .description('test hhhhhhhhhhhhh').action((aaa, result) => {
+        inquirer
+            .prompt([
+                {
+                    name: "description",
+                    message: "请输入项目描述"
+                },
+                {
+                    name: "author",
+                    message: "请输入作者名称:"
+                }
+            ]).then(answers => {
+                console.log(answers.description, answers.author)
+
+            });
+    });
+
+
+
+function help() {
+    program.parse(process.argv);
+    if (program.args.length < 1) return program.help();
+}
+help();
