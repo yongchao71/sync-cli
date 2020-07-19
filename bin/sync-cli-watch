@@ -18,10 +18,11 @@ program.usage('<command> [zks-name]');
     program.option(item.flags, item.description);
 });
 program.on('--help', function () {
-    console.log(' zks Examples:')
     console.log()
-    console.log('    # this is zks filter')
-    console.log('    $ my-cli zks my-project')
+    console.log(' Watch steps:')
+    console.log('    1.Clean destination data.')
+    console.log('    2.Copy files from source to destination.')
+    console.log('    3.Start watch.')
     console.log()
 })
 
