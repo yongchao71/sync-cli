@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+const program = require('commander');
+const inquirer = require('inquirer');
+const chokidar = require('chokidar');
+const path = require('path');
+const download = require('download-git-repo');
+const ora = require('ora');
+const { log, success } = require('../lib/logger');
+const config = require('../config/config.json');
+const { startWatch } = require('../lib/watcher');
+
+
+program.usage('<command> [zks-name]');
+    // .option('-z, --zzzz [type]', 'this is z 1111')
+    // .option('-k, --kkkk [ff]', 'this is k')
+    // .option('-s, --ssss [type]', 'this is s')
+[{ flags: '-z, --zzzz [type]', description: 'this is z 1111' }, { flags: '-k, --kkkk [type]', description: 'this is k 2222' }].forEach(item => {
+    program.option(item.flags, item.description);
+});
+program.on('--help', function () {
+    console.log(' zks Examples:')
+    console.log()
+    console.log('    # this is zks filter')
+    console.log('    $ my-cli zks my-project')
+    console.log()
+})
+
+function help() {
+    program.parse(process.argv);
+    console.log('process.argv---->>', process.argv);
+    console.log('program--zzzz--->>>', program.zzzz, program.kkkk, program.ssss)
+    if (program.args && program.args.length < 1) return program.help();
+    const watcher = startWatch();
+    if (watcher) {
+        return watcher;
+    }
+}
+help();
+
+

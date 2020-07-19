@@ -2,5 +2,6 @@
     "project": "sync-cli",
     "separator": "-->",
     "source": "D:\\temp\\sync-test\\source",
-    "destination": "D:\\temp\\sync-test\\destination"
+    "destination": "D:\\temp\\sync-test\\destination",
+    "ignored": "node_modules"
 }

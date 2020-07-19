@@ -3,9 +3,10 @@ const program = require('commander');
 const inquirer = require('inquirer');
 const download = require('download-git-repo');
 const ora = require('ora');
+const { error } = require('../lib/logger')
 
 process.on('uncaughtException', function (err) {
-    console.log('Caught exception: ' + err);
+    error('Caught exception: ' + err);
 });
 
 process.on('exit', result => {
@@ -17,6 +18,7 @@ program
     .usage('<command> [project-name]');
 
 program.command('zks <command>', 'this is zks test')
+    .command('watch', 'this is global watcher')
     .command('init').alias('i')
     .description('generate a new project from a template')
     .action(function (projectName) {
