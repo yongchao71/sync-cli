@@ -1,16 +1,31 @@
 #!/usr/bin/env node
 const program = require('commander');
 const path = require('path');
+const Handlebars = require('handlebars')
 const { generator } = require('../lib/generator');
+const { getUser } = require('../lib/git-user');
 
-const src = path.join(process.cwd(), 'template/source/demo')
-const destination = path.join(process.cwd(), 'template/destination')
+
+Handlebars.registerHelper('if_eq', function (value, opts) {
+    return value === 'aa'
+        ? opts.fn(this)
+        : opts.inverse(this)
+})
+
+Handlebars.registerHelper('transformat', function (value, opts) {
+    return new Handlebars.SafeString("<font color='pink'>通讯录信息</font>");
+})
+
+const src = path.join(process.cwd(), 'local-test/source/demo')
+const destination = path.join(process.cwd(), 'local-test/destination')
 generator({
     projectName: 'project_22212',
     projectVersion: '1.11.2',
-    projectDescription: 'this is description'
+    projectDescription: 'this is description',
+    tableTitle: ['姓名', '性别', '年龄'],
+    students: [{ name: "zhang", sex: "男", age: 22 }, { name: "", sex: "", age: "" }]
 }, src, destination).then(result => {
-    console.log(result);
+    console.log(result, '<----1111111111111---->', process.cwd());
 });
 
 
