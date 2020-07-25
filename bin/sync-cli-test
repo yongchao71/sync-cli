@@ -2,19 +2,20 @@
 const program = require('commander');
 const path = require('path');
 const Handlebars = require('handlebars')
+const home = require('user-home');
 const { generator } = require('../lib/generator');
 const { getUser } = require('../lib/git-user');
+const { download } = require('../lib/download');
+const handlebarsHelper = require('../lib/handlebars-helper');
 
 
-Handlebars.registerHelper('if_eq', function (value, opts) {
-    return value === 'aa'
-        ? opts.fn(this)
-        : opts.inverse(this)
-})
+handlebarsHelper.registerIfEq();
+handlebarsHelper.registerTransformat();
 
-Handlebars.registerHelper('transformat', function (value, opts) {
-    return new Handlebars.SafeString("<font color='pink'>通讯录信息</font>");
-})
+console.log(path.resolve('local-test/source'), '==================', home);
+download(path.join(home, '.vue-templates', 'sync-cli'));
+
+
 
 const src = path.join(process.cwd(), 'local-test/source/demo')
 const destination = path.join(process.cwd(), 'local-test/destination')
