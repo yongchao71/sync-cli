@@ -13,7 +13,7 @@ handlebarsHelper.registerIfEq();
 handlebarsHelper.registerTransformat();
 
 console.log(path.resolve('local-test/source'), '==================', home);
-download(path.join(home, '.vue-templates', 'sync-cli'));
+download('https://github.com/yongchao71/sync-cli.git#dev', path.join(home, '.vue-templates', 'sync-cli'));
 
 
 
