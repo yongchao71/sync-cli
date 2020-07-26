@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 const program = require('commander');
 const path = require('path');
+const fs = require('fs');
+const fsSync = require('fs-sync');
 const Handlebars = require('handlebars')
 const home = require('user-home');
 const { generator } = require('../lib/generator');
 const { getUser } = require('../lib/git-user');
 const { download } = require('../lib/download');
+const { osReturn } = require('../lib/system');
 const handlebarsHelper = require('../lib/handlebars-helper');
 
 
@@ -13,20 +16,59 @@ handlebarsHelper.registerIfEq();
 handlebarsHelper.registerTransformat();
 
 console.log(path.resolve('local-test/source'), '==================', home);
-download('https://github.com/yongchao71/sync-cli.git#dev', path.join(home, '.vue-templates', 'sync-cli'));
+console.log('=================start===================');
+console.log(path.basename(home), path.dirname(home));
+console.log('=================end===================');
+const tempPath = path.join(home, '.vue-templates', 'sync-cli');
+const newPath = path.join(home, '.vue-templates', 'sync-cli-bak-' + (~~Math.random() * 1000));
+const tempFilePath = path.join(home, '.vue-templates', 'sync-cli', 'image-routing.module.ts');
+
+const fsSyncResult = fsSync.read(tempFilePath, {});
+// console.log(fsSyncResult);
+const readArray = fsSyncResult.split(osReturn());
+console.log(readArray);
+const regex = /import\s+?{[\S\s]+?}\s+?from\s+?'\S+?';/g;
+const execData = fsSyncResult.match(regex);
+
+const importData = 'import { ImageDetailComponent  as demo } from \'./detail/image-detail.component\';' + osReturn();
+let insertIndex = 0;
+
+if (execData) {
+    const lastImport = execData[execData.length - 1];
+    insertIndex = readArray.indexOf(lastImport) + 1;
+    console.log(insertIndex);
+}
+readArray.splice(insertIndex, 0, importData);
+
+fsSync.write(tempFilePath, readArray.join(osReturn()));
+// fsSync.write(tempFilePath, '12121212121212121221');
+
+
+console.log('=======================11111====start======================', readArray);
+
+
+// download('https://github.com/yongchao71/sync-cli.git#dev', tempPath).then(() => {
+//     // fs.rename(tempPath, newPath, function (err) {
+//     //     if (err) {
+//     //         console.log("重命名失败！");
+//     //     } else {
+//     //         console.log("重命名成功！");
+//     //     }
+//     // });
+// });
 
 
 
-const src = path.join(process.cwd(), 'local-test/source/demo')
-const destination = path.join(process.cwd(), 'local-test/destination')
-generator({
-    projectName: 'project_22212',
-    projectVersion: '1.11.2',
-    projectDescription: 'this is description',
-    tableTitle: ['姓名', '性别', '年龄'],
-    students: [{ name: "zhang", sex: "男", age: 22 }, { name: "", sex: "", age: "" }]
-}, src, destination).then(result => {
-    console.log(result, '<----1111111111111---->', process.cwd());
-});
+// const src = path.join(process.cwd(), 'local-test/source/demo')
+// const destination = path.join(process.cwd(), 'local-test/destination')
+// generator({
+//     projectName: 'project_22212',
+//     projectVersion: '1.11.2',
+//     projectDescription: 'this is description',
+//     tableTitle: ['姓名', '性别', '年龄'],
+//     students: [{ name: "zhang", sex: "男", age: 22 }, { name: "", sex: "", age: "" }]
+// }, src, destination).then(result => {
+//     console.log(result, '<----1111111111111---->', process.cwd());
+// });
 
 
